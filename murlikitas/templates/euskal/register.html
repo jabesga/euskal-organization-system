@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+{% if registered %}
+Registered successfully!
+<a href="/euskal/login/">Back to login!</a><br>
+{% else %}
+<form id="user_form" method="post" action="/euskal/register/" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+
+    <input type="submit" name="submit" value="Submit">
+{% endif %}
+</form>
+
+
+</body>
+</html>

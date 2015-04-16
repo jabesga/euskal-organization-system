@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Map Status</title>
+</head>
+<body>
+{% for member in list %}
+Nombre: {{ member.name }} ||| Izq: {{ member.left_locked }} ||| Der: {{ member.right_locked }}<br>
+{% endfor %}
+
+</body>
+</html>
