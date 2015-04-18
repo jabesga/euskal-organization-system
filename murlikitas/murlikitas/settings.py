@@ -20,12 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'yx8sv15a^pp9$s!9z)9w8m#^!+0a_vjr#-d58jvvkl&osi=o4q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -59,8 +61,14 @@ WSGI_APPLICATION = 'murlikitas.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'euskal_db',
+        'USER': 'euskal',
+        'PASSWORD': 'euskal',
+        'HOST': 'localhost',
+        'PORT': '',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -90,3 +98,5 @@ TEMPLATE_DIRS = (
 )
 
 LOGIN_URL = '/euskal/login/'
+
+STATIC_ROOT = '/opt/statics/euskal/'

@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <title>MURLIKITAS</title>
 </head>
-<h1>OPCIONES</h1>
-<a href="/euskal/register/">Registrarse</a><br>
-{% if user.is_authenticated %}
-<a href="/euskal/logout/">Logout</a><br>
-{% else %}
-<a href="/euskal/login/">Login</a><br>
-{% endif %}
-<a href="/euskal/preferences/">Elegir preferencias</a><br>
-<a href="/euskal/status/">Ver estado del mapa</a><br>
 <body>
+<div style="text-align: center">
+    <h1>PAGINA PRINCIPAL MURKILITAS</h1>
 
+    <h2><a href="/euskal/login/">Login</a></h2>
+    (¿No tienes una cuenta? <a href="/euskal/register/">Registrate</a>)<br><br>
+
+    <h2><a href="/euskal/status/">Ver estado del mapa</a></h2>
+</div>
 </body>
 </html>

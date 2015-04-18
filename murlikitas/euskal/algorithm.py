@@ -1,17 +1,32 @@
-class Member(object):
-    leftlist = []
-    rightlist = []
-    name = ""
-    left_locked = ""
-    right_locked = ""
+class Person(object):
+    left_choices_list = []
+    right_choices_list = []
+    full_name = ""
 
-    def __init__(self, name, leftlist, rightlist):
-        self.leftlist = leftlist
-        self.name = name
-        self.rightlist = rightlist
+    def __init__(self, full_name, left_choices_list, right_choices_list):
+        self.full_name = full_name
+        self.left_choices_list = left_choices_list
+        self.right_choices_list = right_choices_list
 
-    def print_locked(self):
-        print "Nombre:", self.name,  "||| Izq: " + self.left_locked,  "||| Der: ", self.right_locked
+    def print_data_for_testing(self):
+        print "\nNombre completo: %s \nIzquierda: %s \nDerecha: %s\n" % (self.full_name, self.left_choices_list, self.right_choices_list)
+
+
+def find_pos_by_name(people_list, full_name):
+    """ Return position of the element that contains the name """
+    found = False
+    i = 0
+    while not found and i < len(people_list):
+        if full_name == people_list[i].full_name:
+            return i
+        else:
+            i += 1
+    return -1
+
+
+def run_algorithm(people_list):
+    print find_pos_by_name(people_list, people_list[0].full_name)
+
 
     def are_already_locked_together(self, name):
         if self.left_locked == name or self.right_locked == name:
@@ -45,17 +60,3 @@ class Member(object):
                 except IndexError:
                     return
 
-    def find_pos_in_list_by_name(self, name, list):
-        ''' Return position of the element that contains the name '''
-        found = False
-        i = 0
-        while found == False and i < len(list):
-            if name == list[i].name:
-                found = True
-            else:
-                i += 1
-
-        if found:
-            return i
-        else:
-            return -1

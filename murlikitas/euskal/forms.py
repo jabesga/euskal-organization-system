@@ -1,27 +1,67 @@
+# -*- encoding: utf-8 -*-
 from django import forms
-from euskal.models import User, UserPreferences
+from euskal.models import User, UserPreferences, Choices
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(label='Nombre de usuario')
+    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput())
+    first_name = forms.CharField(label='Nombre:')
+    last_name = forms.CharField(label='Primer apellido:')
+    email = forms.EmailField(label='Email')
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email', 'password', 'first_name', 'last_name')
 
 
-class PreferencesForm(forms.ModelForm):
-    fields = []
-    for u in User.objects.all().exclude(username='admin'):
-        fields.append((u.username, u.username))
+class ChoiceForm(forms.ModelForm):
+    full_name_list = [('', '')]
 
-    first_left_choice = forms.CharField(required=False, widget=forms.Select(choices=fields))
-    second_left_choice = forms.CharField(required=False, widget=forms.Select(choices=fields))
-    third_left_choice = forms.CharField(required=False, widget=forms.Select(choices=fields))
-    first_right_choice = forms.CharField(required=False, widget=forms.Select(choices=fields))
-    second_right_choice = forms.CharField(required=False, widget=forms.Select(choices=fields))
-    third_right_choice = forms.CharField(required=False, widget=forms.Select(choices=fields))
+    queryset = User.objects.all().exclude(username='admin')
+    for user in queryset:
+        full_name = "%s %s" % (user.first_name, user.last_name)
+        full_name_list.append((full_name, full_name))
+
+    first_choice = forms.CharField(initial='',
+                                   required=False,
+                                   label='Primera opcion',
+                                   max_length=128,
+                                   widget=forms.Select(choices=full_name_list))
+    second_choice = forms.CharField(initial='',
+                                    required=False,
+                                    label='Segunda opcion',
+                                    max_length=128,
+                                    widget=forms.Select(choices=full_name_list))
+    third_choice = forms.CharField(initial='',
+                                   required=False,
+                                   label='Tercera opcion',
+                                   max_length=128,
+                                   widget=forms.Select(choices=full_name_list))
 
     class Meta:
-        model = UserPreferences
-        exclude = ('user',)
+        model = Choices
+        fields = ('first_choice', 'second_choice', 'third_choice')
+
+    def __init__(self, *args, **kwargs):
+        self.up = kwargs.pop('up')
+        self.prefix = kwargs.get('prefix')
+        super(ChoiceForm, self).__init__(*args, **kwargs)
+        try:
+            upref = UserPreferences.objects.get(user_profile=self.up)
+
+            if self.prefix == 'left':
+                self.fields['first_choice'].initial = upref.left_choices.first_choice
+                self.fields['second_choice'].initial = upref.left_choices.second_choice
+                self.fields['third_choice'].initial = upref.left_choices.third_choice
+            elif self.prefix == 'right':
+                self.fields['first_choice'].initial = upref.right_choices.first_choice
+                self.fields['second_choice'].initial = upref.right_choices.second_choice
+                self.fields['third_choice'].initial = upref.right_choices.third_choice
+
+        except UserPreferences.DoesNotExist:
+            pass
+
+
+
+

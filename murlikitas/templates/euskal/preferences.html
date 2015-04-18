@@ -2,18 +2,34 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Preferences</title>
+    <title>Login</title>
 </head>
 <body>
+<h1>Tus preferencias</h1>
+{% if saved %}
+<h1 style="color:green">Preferencias guardadas</h1>
+<a href="/euskal/preferences">Volver a tus preferencias</a>
 
+{% else %}
 <form id="preferences_form" method="post" action="/euskal/preferences/" enctype="multipart/form-data">
+    <div style="width:50%; display:inline-block;">
+        {% csrf_token %}
+        <div style="float:left; width:50%">
+            <h2>Izquierda</h2>
+            {{ left_choices_form.as_p }}
+        </div >
+        <div style="float:left; width:50%">
+            <h2>Derecha</h2>
+            {{ right_choices_form.as_p }}
+        </div>
+    </div>
 
-    <input type="text" name="username" value="{{ user.username }}" readonly><br><br>
-    {% csrf_token %}
-    {{ preferences_form.as_p }}
-    <input type="submit" name="submit" value="Submit">
-
+    <div>
+    <input type="submit" name="submit" value="Guardar">
+    </div>
 </form>
-{{ saved }}
+<br>
+<a href="/euskal/">Volver al inicio</a>
+{% endif %}
 </body>
 </html>
