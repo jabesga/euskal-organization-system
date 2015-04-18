@@ -1,20 +1,21 @@
-Esther,Sergio;JonAnder;Nagore
-AnderCarrasco,Barrio;Itxaso;AnderCarrasco,Barrio
-Gaizka,Ruben,Barrio;Iker;Gaizka,Ruben,Barrio
-AnderColaman;Esther;Sergio,JonAnder,Nagore
-Itxaso,Edu,Ruben;AnderCarrasco;Edu,Itxaso,Sheiteru
-Matas,Sheiteru,Ruben;Gaizka;Ruben,Sheiteru,Barrio
-Sheiteru,Gaizka,Matas;Ruben;Sheiteru,Gaizka,Matas
-Marcos;Noelia;Mati
-Esther;Sergio;Nagore,JonAnder
-Noelia;Mati;Arkaitz
-Victor;Marcos;Noelia
-Naiara,Inhar;Borja;Inhar,Naiara
-Borja,Arkaitz;Naiara;Arkaitz,Borja
-*NP;AnderColaman;Esther
-Asier,Jordan,Yeray;Gontzal;Jordan,Asier,Yeray
-Mati,Naiara;Arkaitz;Naiara,Mati
-JonAnder;Nagore;SergioReina
-Borja;Inhar;Borja
-*ESQUINA;Javier;Jaime
-EvaFiel;RubenBarreiro;DavidDiez
+Jon Ander;Besga;jonnand;Esther Otero,Sergio Tobal;Nagore Reina
+Itxaso;Espina;txipseta;Ander Carrasco,Jon Barrio;Ander Carrasco,Jon Barrio
+Iker;Matas;Maldok;Gaizka Fernandez,Ruben Delgado,Jon Barrio;Gaizka Fernandez,Ruben Delgado,Jon Barrio
+Esther;Otero;Pokaeru;Ander Sanchez;Sergio Tobal,Jon Ander Besga,Nagore Reina
+Ander;Carrasco;andergumy;Itxaso Espina,Eduardo Salgado,Ruben Delgado;Eduardo Salgado,Itxaso Espina,Ruben Pellon
+Gaizka;Fernandez;Saxg;Iker Matas,Ruben Pellon,Ruben Delgado;Ruben Delgado,Ruben Pellon,Jon Barrio
+Ruben;Delgado;rufobia;Ruben Pellon,Gaizka Fernandez,Iker Matas;Ruben Pellon,Gaizka Fernandez,Iker Matas
+Javier;Rubio Herrero;Kolkuth;Marcos Escudero;Jaime Escudero
+Noelia;Ortiz;noegussy;Marcos Escudero;Mati Davila
+Sergio;Tobal;set92;Esther Otero;Nagore Reina, Jon Ander Besga
+Mati;Davila;Mati;Noelia Ortiz;Arkaitz Marcos
+Marcos;Escudero;escumarcos;Victor Martinez;Noelia Ortiz
+Borja;Minguela;Slye;Naiara Espina,Inhar De Domingo;Inhar De Domingo, Naiara Espina
+Naiara;Espina;naiara373;Borja Minguela,Arkaitz Marcos;Arkaitz Marcos,Borja Minguela
+Ander;Sanchez;colaman32;Inhar De Domingo;Esther Otero
+Gontzal;Corredor;Megagon;Asier Sabin de Ormaetxea,Jordan Guardo,Yeray Feijoo;Jordan Guardo,Asier Sabin de Ormaetxea,Yeray Feijoo
+Arkaitz;Marcos;MAG;Mati Davila,Naiara Espina;Naiara Espina,Mati Davila
+Nagore;Reina;Nagorro;Jon Ander Besga;Sergio Reina
+Inhar;De Domingo;Dremis;Borja Minguela;Borja Minguela
+Eduardo;Salgado;Adict-One;Ander Carrasco;Iker Matas,Aitor Gaztañaga,Ruben Delgado
+Jon;Barrio;Sotiksid;Ruben Delgado,Aitor Gaztañaga,Iker Matas;Itxaso Espina,Ruben Delgado,Iker Matas

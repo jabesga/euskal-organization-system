@@ -142,9 +142,9 @@ def status(request):
                               preference.right_choices.second_choice,
                               preference.right_choices.third_choice]
 
-        p = Person(preference.user_profile, left_choices_list, right_choices_list)
+        p = Person(str(preference.user_profile), left_choices_list, right_choices_list)
         people_list.append(p)
 
-    # run_algorithm(people_list)
+    run_algorithm(people_list)
 
     return render(request, 'euskal/status.html', {'people_list': people_list})

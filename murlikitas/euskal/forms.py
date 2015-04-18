@@ -16,28 +16,22 @@ class UserForm(forms.ModelForm):
 
 
 class ChoiceForm(forms.ModelForm):
-    full_name_list = [('', '')]
-
-    queryset = User.objects.all().exclude(username='admin')
-    for user in queryset:
-        full_name = "%s %s" % (user.first_name, user.last_name)
-        full_name_list.append((full_name, full_name))
 
     first_choice = forms.CharField(initial='',
                                    required=False,
                                    label='Primera opcion',
                                    max_length=128,
-                                   widget=forms.Select(choices=full_name_list))
+                                   widget=forms.Select(choices=[('','')]))
     second_choice = forms.CharField(initial='',
                                     required=False,
                                     label='Segunda opcion',
                                     max_length=128,
-                                    widget=forms.Select(choices=full_name_list))
+                                    widget=forms.Select(choices=[('','')]))
     third_choice = forms.CharField(initial='',
                                    required=False,
                                    label='Tercera opcion',
                                    max_length=128,
-                                   widget=forms.Select(choices=full_name_list))
+                                   widget=forms.Select(choices=[('','')]))
 
     class Meta:
         model = Choices
@@ -47,6 +41,17 @@ class ChoiceForm(forms.ModelForm):
         self.up = kwargs.pop('up')
         self.prefix = kwargs.get('prefix')
         super(ChoiceForm, self).__init__(*args, **kwargs)
+
+        full_name_list = [('', '')]
+        queryset = User.objects.all().exclude(username='admin')
+        for user in queryset:
+            full_name = "%s %s" % (user.first_name, user.last_name)
+            full_name_list.append((full_name, full_name))
+
+        self.fields['first_choice'].widget=forms.Select(choices=full_name_list)
+        self.fields['second_choice'].widget=forms.Select(choices=full_name_list)
+        self.fields['third_choice'].widget=forms.Select(choices=full_name_list)
+
         try:
             upref = UserPreferences.objects.get(user_profile=self.up)
 
@@ -61,7 +66,3 @@ class ChoiceForm(forms.ModelForm):
 
         except UserPreferences.DoesNotExist:
             pass
-
-
-
-

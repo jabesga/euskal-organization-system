@@ -9,7 +9,9 @@ class Person(object):
         self.right_choices_list = right_choices_list
 
     def print_data_for_testing(self):
-        print "\nNombre completo: %s \nIzquierda: %s \nDerecha: %s\n" % (self.full_name, self.left_choices_list, self.right_choices_list)
+        print "\nNombre completo: %s \nIzquierda: %s \nDerecha: %s\n" % (self.full_name,
+                                                                         self.left_choices_list,
+                                                                         self.right_choices_list)
 
 
 def find_pos_by_name(people_list, full_name):
@@ -25,7 +27,26 @@ def find_pos_by_name(people_list, full_name):
 
 
 def run_algorithm(people_list):
-    print find_pos_by_name(people_list, people_list[0].full_name)
+
+    matched_list = []
+    # busqueda por la izq
+    for people in people_list:
+        pos = find_pos_by_name(people_list, people.left_choices_list[0])
+        if people_list[pos].right_choices_list[0] == people.full_name:
+            p1 = people_list.pop(find_pos_by_name(people_list, people.full_name))
+            p2 = people_list.pop(pos)
+            matched_list.append(p2)
+            matched_list.append(p1)
+
+    #funciones de añadir por la izquierda y añadir por la derecha
+    print "Lista", matched_list[0].full_name, matched_list[1].full_name
+
+
+    # busqueda por la der
+    # for people in people_list:
+    #     pos = find_pos_by_name(people_list, people.right_choices_list[0])
+    #     if people_list[pos].left_choices_list[0] == people.full_name:
+    #         print "Emparejado por la derecha %s con %s" % (people.full_name, people_list[pos].full_name)
 
 
     def are_already_locked_together(self, name):
