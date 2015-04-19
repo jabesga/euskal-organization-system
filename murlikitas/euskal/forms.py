@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django import forms
-from euskal.models import User, UserPreferences, Choices
+from euskal.models import User, UserPreferences, Choices, Option
 
 
 class UserForm(forms.ModelForm):
@@ -15,7 +15,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'first_name', 'last_name')
 
 
-class ChoiceForm(forms.ModelForm):
+class ChoicesForm(forms.ModelForm):
 
     first_choice = forms.CharField(initial='',
                                    required=False,
@@ -40,17 +40,18 @@ class ChoiceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.up = kwargs.pop('up')
         self.prefix = kwargs.get('prefix')
-        super(ChoiceForm, self).__init__(*args, **kwargs)
+        super(ChoicesForm, self).__init__(*args, **kwargs)
 
         full_name_list = [('', '')]
         queryset = User.objects.all().exclude(username='admin')
         for user in queryset:
             full_name = "%s %s" % (user.first_name, user.last_name)
             full_name_list.append((full_name, full_name))
+        full_name_list = sorted(full_name_list)
 
-        self.fields['first_choice'].widget=forms.Select(choices=full_name_list)
-        self.fields['second_choice'].widget=forms.Select(choices=full_name_list)
-        self.fields['third_choice'].widget=forms.Select(choices=full_name_list)
+        self.fields['first_choice'].widget = forms.Select(choices=full_name_list)
+        self.fields['second_choice'].widget = forms.Select(choices=full_name_list)
+        self.fields['third_choice'].widget = forms.Select(choices=full_name_list)
 
         try:
             upref = UserPreferences.objects.get(user_profile=self.up)
@@ -66,3 +67,29 @@ class ChoiceForm(forms.ModelForm):
 
         except UserPreferences.DoesNotExist:
             pass
+
+
+class OptionsForm(forms.Form):
+
+    name_choice = forms.ChoiceField(label='', choices=[('', '')], widget=forms.RadioSelect())
+
+    def __init__(self, *args, **kwargs):
+        super(OptionsForm, self).__init__(*args, **kwargs)
+
+        option_name_list = []
+        queryset = Option.objects.all()
+        for option in queryset:
+            option_name_list.append((option.option_name, option.option_name))
+        option_name_list = sorted(option_name_list)
+
+        self.fields['name_choice'].choices = option_name_list
+
+
+class NewOptionForm(forms.ModelForm):
+
+    option_name = forms.CharField(label='Añadir nuevo nombre',max_length=128)
+
+    class Meta:
+        model = Option
+        fields = ['option_name']
+

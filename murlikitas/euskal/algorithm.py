@@ -38,7 +38,7 @@ def run_algorithm(people_list):
             matched_list.append(p2)
             matched_list.append(p1)
 
-    #funciones de añadir por la izquierda y añadir por la derecha
+    #funciones de anadir por la izquierda y anadir por la derecha
     print "Lista", matched_list[0].full_name, matched_list[1].full_name
 
 

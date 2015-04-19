@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    has_voted_group_name = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "%s %s" % (self.user.first_name, self.user.last_name)
@@ -26,4 +27,12 @@ class Choices(models.Model):
 
     def __unicode__(self):
         return 'FC: %s, SC: %s, TC: %s' % (self.first_choice, self.second_choice, self.third_choice)
+
+
+class Option(models.Model):
+    option_name = models.CharField(max_length=128, default='')
+    votes = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.option_name
 

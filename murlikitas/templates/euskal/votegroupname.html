@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>MURLIKITAS</title>
+</head>
+<body>
+<h1>Votacion de nombre del grupo</h1>
+{% if voted %}
+<h1 style="color:green">Votación guardada</h1>
+<a href="/euskal/">Volver al inicio</a>
+
+{% else %}
+<div style="width:100%; display:inline-block;">
+    <h2>Atencion! Una vez votes no podrás volver a esta pagina. Elige sabiamente...</h2>
+    <div style="float:left; width:50%">
+        <img src="http://hsvtp.com/wp-content/uploads/2014/08/Choose-Wisely.jpg">
+    </div>
+    <div style="float:left; width:50%">
+        <p><strong>Puedes elegir un nombre ya existente:</strong></p>
+        {% if option_list|length == 0 %}
+        <p>Aun no se ha propuesto ningún nombre. Sé el primero/a!</p>
+        {% else %}
+        <form id="options_form" method="post" action="/euskal/vote-group-name/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ options_form.as_p }}
+
+        <input type="submit" name="submit" value="Enviar voto">
+
+        </form>
+        {% endif %}
+        <p><strong>o añadir un nombre que no esté en la lista:</strong></p>
+        <p><code>(Añadir un nombre nuevo cuenta como votar por él)</code></p>
+
+        <form id="create_new_option_form" method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ new_option_form.as_p }}
+
+        <input type="submit" name="submit" value="Enviar nueva opcion">
+
+        </form>
+
+        <br><a href="/euskal/">No votar aun. Volver al inicio</a>
+    </div>
+</div>
+{% endif %}
+</body>
+</html>

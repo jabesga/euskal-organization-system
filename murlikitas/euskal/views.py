@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from euskal.forms import UserForm, ChoiceForm
-from euskal.models import UserProfile, UserPreferences
+from euskal.forms import UserForm, ChoicesForm, OptionsForm, NewOptionForm
+from euskal.models import UserProfile, UserPreferences, Option
 
 from euskal.algorithm import Person, run_algorithm
 
@@ -78,8 +78,8 @@ def preferences(request):
 
         if request.method == 'POST':
 
-            left_choices_form = ChoiceForm(request.POST, prefix='left', up=up)  # Get the info from the form.
-            right_choices_form = ChoiceForm(request.POST, prefix='right', up=up)  # Get the info from the form.
+            left_choices_form = ChoicesForm(request.POST, prefix='left', up=up)  # Get the info from the form.
+            right_choices_form = ChoicesForm(request.POST, prefix='right', up=up)  # Get the info from the form.
 
             try:
                 upref = UserPreferences.objects.get(user_profile=up)  # Try to find the UserPreferences from the User.
@@ -122,8 +122,8 @@ def preferences(request):
                 print left_choices_form.errors, right_choices_form.errors
 
         else:
-            left_choices_form = ChoiceForm(prefix='left', up=up)  # Create the left_choices form.
-            right_choices_form = ChoiceForm(prefix='right', up=up)  # Create the right_choices form.
+            left_choices_form = ChoicesForm(prefix='left', up=up)  # Create the left_choices form.
+            right_choices_form = ChoicesForm(prefix='right', up=up)  # Create the right_choices form.
 
         return render(request, 'euskal/preferences.html', {'left_choices_form': left_choices_form,
                                                            'right_choices_form': right_choices_form,
@@ -148,3 +148,39 @@ def status(request):
     run_algorithm(people_list)
 
     return render(request, 'euskal/status.html', {'people_list': people_list})
+
+@login_required
+def vote_group_name(request):
+    up = UserProfile.objects.get(user=request.user)  # Get the UserProfile using the User.
+    if request.user.username == 'admin':
+        return HttpResponse("Admin can't vote")
+    elif not up.has_voted_group_name:
+        if request.method == 'POST':
+            options_form = OptionsForm(request.POST)
+            if options_form.is_valid():
+                name_choice = options_form.cleaned_data['name_choice']
+                o = Option.objects.get(option_name=name_choice)
+                o.votes += 1
+                o.save()
+
+            new_option_form = NewOptionForm(request.POST)
+            if new_option_form.is_valid():
+                option = new_option_form.save(commit=False)
+                option.votes = 1
+                option.save()
+
+            up.has_voted_group_name = True
+            up.save()
+
+            return render(request, 'euskal/votegroupname.html', {'voted': True })
+        else:
+            options_form = OptionsForm()
+            new_option_form = NewOptionForm()
+
+        option_list = Option.objects.all()
+        return render(request, 'euskal/votegroupname.html', {'options_form': options_form,
+                                                             'new_option_form': new_option_form,
+                                                             'option_list': option_list})
+    else:
+        return HttpResponse(
+            "<h1 style='color:red'>Ya has votado anteriormente!</h1><a href='/euskal/'>Volver al inicio</a>")
