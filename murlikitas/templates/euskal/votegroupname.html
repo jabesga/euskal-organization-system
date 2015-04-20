@@ -8,6 +8,8 @@
 <h1>Votacion de nombre del grupo</h1>
 {% if voted %}
 <h1 style="color:green">Votación guardada</h1>
+
+<a href="/euskal/voting-results">Ver resultados de la votación</a><br><br>
 <a href="/euskal/">Volver al inicio</a>
 
 {% else %}
@@ -29,17 +31,19 @@
 
         </form>
         {% endif %}
+
         <p><strong>o añadir un nombre que no esté en la lista:</strong></p>
         <p><code>(Añadir un nombre nuevo cuenta como votar por él)</code></p>
-
+        {% if already %}
+        <p>Ya existe esa opción!</p>
+        {% else %}
         <form id="create_new_option_form" method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{ new_option_form.as_p }}
-
         <input type="submit" name="submit" value="Enviar nueva opcion">
 
         </form>
-
+        {% endif %}
         <br><a href="/euskal/">No votar aun. Volver al inicio</a>
     </div>
 </div>

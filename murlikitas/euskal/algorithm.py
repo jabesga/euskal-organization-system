@@ -39,7 +39,7 @@ def run_algorithm(people_list):
             matched_list.append(p1)
 
     #funciones de anadir por la izquierda y anadir por la derecha
-    print "Lista", matched_list[0].full_name, matched_list[1].full_name
+    print "Lista", matched_list[0].full_name, matched_list[1].full_name # list index out of range si no encuentra
 
 
     # busqueda por la der

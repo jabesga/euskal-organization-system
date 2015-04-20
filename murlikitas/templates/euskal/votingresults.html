@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>MURLIKITAS</title>
+</head>
+<body>
+<h1>Resultados de la votacion</h1>
+<h2>Actualmente los resultados de la votación son:</h2>
+{% for option in option_list %}
+    <li>{{ option.option_name }} ({{ option.votes }} votos)</li>
+{% endfor %}
+
+<br><code>(Los resultados pueden variar durante los proximos dias)</code>
+
+<br><br><a href="/euskal/">Volver al inicio</a>
+</body>
+</html>

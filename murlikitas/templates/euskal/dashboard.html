@@ -7,7 +7,11 @@
 <body>
 <h1>DASHBOARD</h1>
 <h2>Hola {{ user.first_name }} {{ user.last_name }} &lt {{ user.username }} &gt!</h2>
+{% if up.has_voted_group_name %}
+<a href="/euskal/voting-results">Ver resultados de la votación</a><br>
+{% else %}
 <a href="/euskal/vote-group-name/">Votar nombre del grupo</a><br>
+{% endif %}
 <a href="/euskal/preferences/">Elegir preferencias</a><br>
 <a href="/euskal/status/">Ver estado del mapa</a><br><br>
 <a href="/euskal/logout/">Cerrar sesión</a><br>

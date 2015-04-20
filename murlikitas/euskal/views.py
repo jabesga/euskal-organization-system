@@ -10,7 +10,8 @@ from euskal.algorithm import Person, run_algorithm
 
 def index(request):
     if request.user.is_authenticated():
-        return render(request, 'euskal/dashboard.html')
+        up = UserProfile.objects.get(user=request.user)  # Get the UserProfile using the User.
+        return render(request, 'euskal/dashboard.html', {'up': up})
     else:
         return render(request, 'euskal/index.html')
 
@@ -60,7 +61,8 @@ def auth_login(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'euskal/dashboard.html')
+    up = UserProfile.objects.get(user=request.user)  # Get the UserProfile using the User.
+    return render(request, 'euskal/dashboard.html', {'up': up})
 
 
 @login_required
@@ -149,6 +151,7 @@ def status(request):
 
     return render(request, 'euskal/status.html', {'people_list': people_list})
 
+
 @login_required
 def vote_group_name(request):
     up = UserProfile.objects.get(user=request.user)  # Get the UserProfile using the User.
@@ -165,22 +168,33 @@ def vote_group_name(request):
 
             new_option_form = NewOptionForm(request.POST)
             if new_option_form.is_valid():
-                option = new_option_form.save(commit=False)
-                option.votes = 1
-                option.save()
+                try:
+                    proposed_name = new_option_form.cleaned_data['option_name']
+                    op = Option.objects.get(option_name=proposed_name)
+                    if op:
+                        options_form = OptionsForm()
+                        print "PASA POR AQUI"
+                        return render(request, 'euskal/votegroupname.html', {'options_form': options_form,
+                                                                             'already': True})
+                except Option.DoesNotExist:
+                    option = new_option_form.save(commit=False)
+                    option.votes = 1
+                    option.save()
 
             up.has_voted_group_name = True
             up.save()
-
-            return render(request, 'euskal/votegroupname.html', {'voted': True })
+            return render(request, 'euskal/votegroupname.html', {'voted': True})
         else:
             options_form = OptionsForm()
             new_option_form = NewOptionForm()
 
-        option_list = Option.objects.all()
         return render(request, 'euskal/votegroupname.html', {'options_form': options_form,
-                                                             'new_option_form': new_option_form,
-                                                             'option_list': option_list})
+                                                             'new_option_form': new_option_form,})
     else:
         return HttpResponse(
             "<h1 style='color:red'>Ya has votado anteriormente!</h1><a href='/euskal/'>Volver al inicio</a>")
+
+
+def voting_results(request):
+        option_list = Option.objects.all()
+        return render(request, 'euskal/votingresults.html', {'option_list': option_list,})
