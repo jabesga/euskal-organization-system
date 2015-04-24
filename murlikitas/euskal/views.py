@@ -137,12 +137,12 @@ def status(request):
     people_list = []
 
     for preference in UserPreferences.objects.all():
-        left_choices_list = [preference.left_choices.first_choice,
-                             preference.left_choices.second_choice,
-                             preference.left_choices.third_choice]
-        right_choices_list = [preference.right_choices.first_choice,
-                              preference.right_choices.second_choice,
-                              preference.right_choices.third_choice]
+        left_choices_list = [preference.left_choices.first_choice.encode('utf-8').strip(),
+                             preference.left_choices.second_choice.encode('utf-8').strip(),
+                             preference.left_choices.third_choice.encode('utf-8').strip()]
+        right_choices_list = [preference.right_choices.first_choice.encode('utf-8').strip(),
+                              preference.right_choices.second_choice.encode('utf-8').strip(),
+                              preference.right_choices.third_choice.encode('utf-8').strip()]
 
         p = Person(str(preference.user_profile), left_choices_list, right_choices_list)
         people_list.append(p)
@@ -173,7 +173,6 @@ def vote_group_name(request):
                     op = Option.objects.get(option_name=proposed_name)
                     if op:
                         options_form = OptionsForm()
-                        print "PASA POR AQUI"
                         return render(request, 'euskal/votegroupname.html', {'options_form': options_form,
                                                                              'already': True})
                 except Option.DoesNotExist:
@@ -196,5 +195,5 @@ def vote_group_name(request):
 
 
 def voting_results(request):
-        option_list = Option.objects.all()
+        option_list = Option.objects.order_by('-votes')
         return render(request, 'euskal/votingresults.html', {'option_list': option_list,})

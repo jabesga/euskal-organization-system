@@ -23,61 +23,80 @@ def find_pos_by_name(people_list, full_name):
             return i
         else:
             i += 1
-    return -1
+    return None
 
 
-def run_algorithm(people_list):
+def run_algorithm(_people_list):
+    people_list = _people_list[:]
 
     matched_list = []
-    # busqueda por la izq
+
+    # busqueda por la izq. mirar si le quiere en la derecha
     for people in people_list:
         pos = find_pos_by_name(people_list, people.left_choices_list[0])
-        if people_list[pos].right_choices_list[0] == people.full_name:
-            p1 = people_list.pop(find_pos_by_name(people_list, people.full_name))
-            p2 = people_list.pop(pos)
-            matched_list.append(p2)
-            matched_list.append(p1)
+        #print "LA PRIORIDAD DE %r es %r" % (people.full_name, people.left_choices_list[0])
 
-    #funciones de anadir por la izquierda y anadir por la derecha
-    print "Lista", matched_list[0].full_name, matched_list[1].full_name # list index out of range si no encuentra
+        try:
+            #print "LA HEMOS COMPARADO CON LA PERSONA ENCONTRADA CON EL NOMBRE %r" % people_list[pos].right_choices_list[0]
+            if people.full_name == people_list[pos].right_choices_list[0]:
+                #p2 = people_list.pop(pos)
+                #p1 = people_list.pop(find_pos_by_name(people_list, people.full_name))
+                p2 = people_list[pos]
+                p1 = people_list[find_pos_by_name(people_list, people.full_name)]
+
+                # le anade por la izq
+                matched_list.append((p2, p1))
+        except TypeError:
+            pass
+
+    #print_list(matched_list)
+
+    new_list = []
+    for m in matched_list:
+        for n in matched_list:
+            if m[0] == n[1]:
+                pos = find_pos_by_name(people_list, m[0].full_name)
+                people_list.pop(pos)
+
+                for p in people_list:
+                    try:
+                        for choice in range(0, len(p.left_choices_list)-1):
+                            if p.left_choices_list[choice] == m[0].full_name:
+                                p.left_choices_list.pop(choice)
+                        for choice in range(0, len(p.right_choices_list)-1):
+                            if p.right_choices_list[choice] == m[0].full_name:
+                                p.right_choices_list.pop(choice)
+                    except TypeError:
+                        pass
+                new_list.append((n[0], m[0], m[1]))
+    print "CONJUNTO"
+    for n in new_list:
+        print n[0].full_name, n[1].full_name, n[2].full_name
 
 
-    # busqueda por la der
-    # for people in people_list:
-    #     pos = find_pos_by_name(people_list, people.right_choices_list[0])
-    #     if people_list[pos].left_choices_list[0] == people.full_name:
-    #         print "Emparejado por la derecha %s con %s" % (people.full_name, people_list[pos].full_name)
 
+    # busqueda por la izq. mirar si le quiere en la derecha
+    for people in people_list:
+        pos = find_pos_by_name(people_list, people.left_choices_list[0])
+        print "LA PRIORIDAD DE %r es %r" % (people.full_name, people.left_choices_list[0])
 
-    def are_already_locked_together(self, name):
-        if self.left_locked == name or self.right_locked == name:
-            return True
-        else:
-            return False
-    
-    def check_left_preference(self, copy, round):
-        if(self.left_locked == ""):
-            pos = self.find_pos_in_list_by_name(self.leftlist[0], copy)
-            if copy[pos].right_locked == "":
-                try:
-                    if(self.name == copy[pos].rightlist[round].rstrip()):
-                        if self.are_already_locked_together(copy[pos].name) == False:
-                            self.left_locked = copy[pos].name
-                            copy[pos].right_locked = self.name
-                            return
-                except IndexError:
-                    return
+        try:
+            print "LA HEMOS COMPARADO CON LA PERSONA ENCONTRADA CON EL NOMBRE %r" % people_list[pos].right_choices_list[0]
+            if people.full_name == people_list[pos].right_choices_list[0]:
+                #p2 = people_list.pop(pos)
+                #p1 = people_list.pop(find_pos_by_name(people_list, people.full_name))
+                p2 = people_list[pos]
+                p1 = people_list[find_pos_by_name(people_list, people.full_name)]
 
-    def check_right_preference(self, copy, round):
-        if(self.right_locked == ""):
-            pos = self.find_pos_in_list_by_name(self.rightlist[0], copy)
-            if copy[pos].left_locked == "":
-                try:
-                    if(self.name == copy[pos].leftlist[round].rstrip()):
-                        if self.are_already_locked_together(copy[pos].name) == False:
-                            self.right_locked = copy[pos].name
-                            copy[pos].left_locked = self.name
-                            return
-                except IndexError:
-                    return
+                # le anade por la izq
+                matched_list.append((p2, p1))
+        except TypeError:
+            pass
 
+def print_list(matched_list):
+    print '='*50
+    for m in matched_list:
+        print '[',
+        for p in m:
+            print p.full_name, ',',
+        print ']'

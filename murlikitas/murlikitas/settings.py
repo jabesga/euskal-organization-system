@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'yx8sv15a^pp9$s!9z)9w8m#^!+0a_vjr#-d58jvvkl&osi=o4q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'euskal',
+    'gom',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,18 +61,18 @@ WSGI_APPLICATION = 'murlikitas.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    # 'default':{
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # },
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'euskal_db',
-        'USER': 'euskal',
-        'PASSWORD': 'euskal',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    'default':{
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'euskal_db',
+    #     'USER': 'euskal',
+    #     'PASSWORD': 'euskal',
+    #     'HOST': 'localhost',
+    #     'PORT': '',
+    # }
 }
 
 # Internationalization
