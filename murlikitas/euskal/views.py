@@ -10,8 +10,11 @@ from euskal.algorithm import Person, run_algorithm
 
 def index(request):
     if request.user.is_authenticated():
-        up = UserProfile.objects.get(user=request.user)  # Get the UserProfile using the User.
-        return render(request, 'euskal/dashboard.html', {'up': up})
+        if request.user(username='admin'):
+            return HttpResponse("Los administradores no tienen dashboard")
+        else:
+            up = UserProfile.objects.get(user=request.user)  # Get the UserProfile using the User.
+            return render(request, 'euskal/dashboard.html', {'up': up})
     else:
         return render(request, 'euskal/index.html')
 
