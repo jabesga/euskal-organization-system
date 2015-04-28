@@ -3,9 +3,29 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
 </head>
 <body>
-<p>GOM ACTIVADO</p>
+<h1>ACTIVADOR GOM</h1>
+{% if status == 'inactive' %}
+<button style="width: 200px; height: 50px;" id="button" onclick="myFunction()">ACTIVAR GOM</button>
+<h1 id="text"></h1>
+<form id='gom_form' method="post" action='/gom/'>
+{% csrf_token %}
+</form>
+{% endif %}
+
+{% if status == 'active' %}
+<h1>GOM ACTIVADO</h1>
+{% endif %}
+
+<script>
+function myFunction() {
+    document.getElementById("button").style.display = 'none';
+    document.getElementById("text").innerHTML = "Activando GOM...";
+    document.forms["gom_form"].submit();
+}
+</script>
 
 </body>
 </html>
