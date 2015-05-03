@@ -10,7 +10,7 @@ from euskal.algorithm import Person, run_algorithm
 
 def index(request):
     if request.user.is_authenticated():
-        if request.user(username='admin'):
+        if request.user.username == 'admin':
             return HttpResponse("Los administradores no tienen dashboard")
         else:
             up = UserProfile.objects.get(user=request.user)  # Get the UserProfile using the User.
@@ -150,7 +150,7 @@ def status(request):
         p = Person(str(preference.user_profile), left_choices_list, right_choices_list)
         people_list.append(p)
 
-    run_algorithm(people_list)
+    # run_algorithm(people_list)
 
     return render(request, 'euskal/status.html', {'people_list': people_list})
 
