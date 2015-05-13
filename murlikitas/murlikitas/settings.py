@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'euskal',
     'gom',
-    'gcontacts'
+    'terminal',
+    'realityquest'
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1,13 +1,20 @@
 from django.shortcuts import render, HttpResponse, redirect
+import json
+
+
+def index(request):
+    return render(request, 'terminal/index.html')
+
+
+def command(request):
+    response_data = {'output': request.POST['input']}
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+
+
+from terminal.forms import MailForm
 from django.core.mail import send_mail
-
-from forms import MailForm
-
 import gdata.data
-import gdata.contacts.client
-import gdata.contacts.data
-import gdata.contacts.service
-import gdata.gauth
 
 #Obtained from Google Project Settings
 CLIENT_ID  = "1053514243290-qc6m642dtv6dbqdi8k9fttfaapbcqo4d.apps.googleusercontent.com"
@@ -21,10 +28,8 @@ GOOGLE_SCOPE = "https://www.google.com/m8/feeds"
 
 USER_AGENT  = ""
 
-
-def index(request):
+def contacts(request):
     if request.POST:
-
         form = MailForm(request.POST)
         if form.is_valid():
             auth_user = request.POST['auth_user']

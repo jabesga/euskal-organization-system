@@ -5,5 +5,6 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^euskal/', include('euskal.urls')),
                        url(r'^gom/', include('gom.urls')),
-                       url(r'^gcontacts/', include('gcontacts.urls')),
+                       url(r'^terminal/', include('terminal.urls')),
+                       url(r'^realityquest/', include('realityquest.urls')),
                        )

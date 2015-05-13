@@ -59,6 +59,7 @@ def auth_login(request):
             print "Invalid login details: {0} {1}".format(username, password)
             return render(request, 'euskal/login.html', {'invalid': 'Datos de sesion incorrectos'})
     else:
+        print request.GET
         return render(request, 'euskal/login.html')
 
 
