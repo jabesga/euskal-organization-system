@@ -5,8 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from euskal.forms import UserForm, ChoicesForm, OptionsForm, NewOptionForm
 from euskal.models import UserProfile, UserPreferences, Option
 
-from euskal.algorithm import Person, run_algorithm
-
 
 def index(request):
     if request.user.is_authenticated():
@@ -138,22 +136,9 @@ def preferences(request):
 
 def status(request):
 
-    people_list = []
-
-    for preference in UserPreferences.objects.all():
-        left_choices_list = [preference.left_choices.first_choice.encode('utf-8').strip(),
-                             preference.left_choices.second_choice.encode('utf-8').strip(),
-                             preference.left_choices.third_choice.encode('utf-8').strip()]
-        right_choices_list = [preference.right_choices.first_choice.encode('utf-8').strip(),
-                              preference.right_choices.second_choice.encode('utf-8').strip(),
-                              preference.right_choices.third_choice.encode('utf-8').strip()]
-
-        p = Person(str(preference.user_profile), left_choices_list, right_choices_list)
-        people_list.append(p)
-
+    # MISSING ALGORITHM
     # run_algorithm(people_list)
-
-    return render(request, 'euskal/status.html', {'people_list': people_list})
+    return render(request, 'euskal/status.html')
 
 
 @login_required

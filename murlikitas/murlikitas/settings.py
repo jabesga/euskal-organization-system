@@ -39,9 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'euskal',
-    'gom',
-    'terminal',
-    'realityquest'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,8 +103,9 @@ LOGIN_URL = '/euskal/login/'
 
 STATIC_ROOT = '/opt/statics/euskal/'
 
-EMAIL_USE_TLS = True
 
-EMAIL_HOST = 'smtp.gmail.com'
+STATIC_PATH = os.path.join(BASE_DIR,'static')
 
-EMAIL_PORT = 587
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)

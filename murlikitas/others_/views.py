@@ -3,7 +3,7 @@ import json
 
 
 def index(request):
-    return render(request, 'terminal/index.html')
+    return render(request, 'others_/index.html')
 
 
 def command(request):
@@ -11,8 +11,6 @@ def command(request):
     return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
-
-from terminal.forms import MailForm
 from django.core.mail import send_mail
 import gdata.data
 
