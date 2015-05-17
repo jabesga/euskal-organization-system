@@ -8,10 +8,10 @@
 <h1>Tus preferencias</h1>
 {% if saved %}
 <h1 style="color:green">Preferencias guardadas</h1>
-<a href="/euskal/preferences">Volver a tus preferencias</a>
+<a href="/preferences">Volver a tus preferencias</a>
 
 {% else %}
-<form id="preferences_form" method="post" action="/euskal/preferences/" enctype="multipart/form-data">
+<form id="preferences_form" method="post" action="/preferences/" enctype="multipart/form-data">
     <div style="width:50%; display:inline-block;">
         {% csrf_token %}
         <div style="float:left; width:50%">
@@ -29,7 +29,7 @@
     </div>
 </form>
 <br>
-<a href="/euskal/">Volver al inicio</a>
+<a href="/">Volver al inicio</a>
 {% endif %}
 </body>
 </html>

@@ -8,9 +8,9 @@
 <h1>Registrarse</h1>
 {% if registered %}
 Registro correcto!<br><br>
-<a href="/euskal/login/">Loguearse</a><br>
+<a href="/login/">Loguearse</a><br>
 {% else %}
-<form id="user_form" method="post" action="/euskal/register/" enctype="multipart/form-data">
+<form id="user_form" method="post" action="/register/" enctype="multipart/form-data">
     {% csrf_token %}
 
     <h2>Datos de cuenta</h2>
@@ -43,7 +43,7 @@ Registro correcto!<br><br>
 {% endif %}
 </form>
 <br>
-<a href="/euskal/">Volver al inicio</a>
+<a href="/">Volver al inicio</a>
 
 
 </body>

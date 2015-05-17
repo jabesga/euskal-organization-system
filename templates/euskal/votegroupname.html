@@ -9,8 +9,8 @@
 {% if voted %}
 <h1 style="color:green">Votación guardada</h1>
 
-<a href="/euskal/voting-results">Ver resultados de la votación</a><br><br>
-<a href="/euskal/">Volver al inicio</a>
+<a href="/voting-results">Ver resultados de la votación</a><br><br>
+<a href="/">Volver al inicio</a>
 
 {% else %}
 <div style="width:100%; display:inline-block;">
@@ -23,7 +23,7 @@
         {% if option_list|length == 0 %}
         <p>Aun no se ha propuesto ningún nombre. Sé el primero/a!</p>
         {% else %}
-        <form id="options_form" method="post" action="/euskal/vote-group-name/" enctype="multipart/form-data">
+        <form id="options_form" method="post" action="/vote-group-name/" enctype="multipart/form-data">
         {% csrf_token %}
         {{ options_form.as_p }}
 
@@ -44,7 +44,7 @@
 
         </form>
         {% endif %}
-        <br><a href="/euskal/">No votar aun. Volver al inicio</a>
+        <br><a href="/">No votar aun. Volver al inicio</a>
     </div>
 </div>
 {% endif %}
