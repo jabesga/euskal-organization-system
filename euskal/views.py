@@ -34,7 +34,7 @@ def auth_register(request):
 
             registered = True
         else:
-            print user_form.errors
+            print(user_form.errors)
     else:
         user_form = UserForm()
 
@@ -54,10 +54,10 @@ def auth_login(request):
             else:
                 return render(request, 'euskal/login.html', {'invalid': 'Cuenta deshabilitada'})
         else:
-            print "Invalid login details: {0} {1}".format(username, password)
+            print("Invalid login details: {0} {1}".format(username, password))
             return render(request, 'euskal/login.html', {'invalid': 'Datos de sesion incorrectos'})
     else:
-        print request.GET
+        print(request.GET)
         return render(request, 'euskal/login.html')
 
 
@@ -70,7 +70,7 @@ def dashboard(request):
 @login_required
 def auth_logout(request):
     logout(request)
-    return redirect('/euskal/')
+    return redirect('/')
 
 
 @login_required
@@ -123,7 +123,7 @@ def preferences(request):
                                                                    'saved': True})
 
             else:
-                print left_choices_form.errors, right_choices_form.errors
+                print(left_choices_form.errors, right_choices_form.errors)
 
         else:
             left_choices_form = ChoicesForm(prefix='left', up=up)  # Create the left_choices form.
